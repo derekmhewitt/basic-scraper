@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-"""This is a simple data scraper."""
+"""This is a simple data scraper for King County restraunt inspection
+information."""
 import requests
 from bs4 import BeautifulSoup
 import sys
+import re
 
 DOMAIN_NAME = "http://info.kingcounty.gov"
 PATH = "/health/ehs/foodsafety/inspections/Results.aspx"
@@ -16,7 +18,7 @@ QUERY_PARAMS = {
     "Zip_Code": "",
     "Inspection_Type": "All",
     "Inspection_Start": "1/1/2016",
-    "Inspection_End": "8/30/2016",
+    "Inspection_End": "2/28/2016",
     "Inspection_Closed_Business": "A",
     "Violation_Points": "",
     "Violation_Red_Points": "",
@@ -56,16 +58,21 @@ def parse_source(html, encoding="utf-8"):
     return parsed
 
 
+def extract_data_listings(html):
+    id_finder = re.compile(r'PR[\d]+~')
+    return html.find_all('div', id=id_finder)
+
 if __name__ == '__main__':
     kwargs = {
         'Insepction_Start': "1/1/2014",
-        'Inspection_End': "3/3/2014",
+        'Inspection_End': "3/5/2014",
         "Zip_Code": "98109"
     }
     if len(sys.argv) > 1 and sys.argv[1] == "file":
         html, encoding = load_inspection_page()
     else:
-        print("here")
         html, encoding = get_inspection_page(**kwargs)
     doc = parse_source(html, encoding)
-    print(doc.prettify(encoding=encoding))
+    listings = extract_data_listings(doc)
+    print("How many restraunts:", len(listings))
+    print(listings[0].prettify())
