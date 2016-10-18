@@ -13,47 +13,6 @@ from bs4 import BeautifulSoup
 import sys
 import re
 
-# I rewrote this and I can't figure out exactly why, but my rewrite doesn't
-# work, and the code from the assignment does.  Argh~
-
-# DOMAIN_NAME = "http://info.kingcounty.gov"
-# PATH = "/health/ehs/foodsafety/inspections/Results.aspx"
-# QUERY_PARAMS = {
-#     "Output": "W",
-#     "Business_Name": "",
-#     "Business_Address": "",
-#     "Longitude": "",
-#     "Latitude": "",
-#     "City": "Seattle",
-#     "Zip_Code": "",
-#     "Inspection_Type": "All",
-#     "Inspection_Start": "1/1/2016",
-#     "Inspection_End": "2/28/2016",
-#     "Inspection_Closed_Business": "A",
-#     "Violation_Points": "",
-#     "Violation_Red_Points": "",
-#     "Violation_Descr": "",
-#     "Fuzzy_Search": "N",
-#     "Sort": "B",
-# }
-
-
-# def get_inspection_page(**kwargs):
-#     """Makes a query to the King County inspection page and returns the
-#     results."""
-#     url = DOMAIN_NAME + PATH
-#     print(url)
-#     params = QUERY_PARAMS.copy()
-#     for key, val in kwargs.items():
-#         if key in QUERY_PARAMS:
-#             params[key] = val
-#     print(params)
-#     response = requests.get(url, params=params)
-#     response.raise_for_status()
-#     # with open("inspection_page.html") as file:
-#     #     file.write(response.content)
-#     return response.content
-
 INSPECTION_DOMAIN = 'http://info.kingcounty.gov'
 INSPECTION_PATH = '/health/ehs/foodsafety/inspections/Results.aspx'
 INSPECTION_PARAMS = {
